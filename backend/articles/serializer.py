@@ -15,6 +15,5 @@ class CommentSerializer(serializers.Serializer):
     contents = serializers.CharField()
     created_at = serializers.DateTimeField()
     
-
     class Meta:
         pass

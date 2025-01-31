@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, get_list_or_404
 from .models import Article
-from .serializer import serialize_article_to_json, ArticleDetailSerializer, ArticleSerializer
+from .serializer import ArticleSerializer
 
 # Create your views here.
 def index(request):

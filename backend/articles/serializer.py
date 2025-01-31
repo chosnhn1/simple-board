@@ -1,25 +1,20 @@
-from django.core import serializers
+from rest_framework import serializers
 from .models import Article, Comment
 
-class ArticleDetailSerializer():
-    def __init__(self, content):
-        self.content = content
+class ArticleSerializer(serializers.Serializer):
+    title = serializers.CharField()
+    contents = serializers.CharField()
+    created_at = serializers.DateTimeField()
+    updated_at = serializers.DateTimeField()
+    is_notice = serializers.BooleanField()
 
-    def is_valid(self):
+    class Meta:
         pass
 
-    def serialize(self):
-        return {
-            'id': self.content.pk,
-            'title': self.content.title,
-            'contents': self.content.contents,
-            'author': self.content.author,
-        }
+class CommentSerializer(serializers.Serializer):
+    contents = serializers.CharField()
+    created_at = serializers.DateTimeField()
+    
 
-
-def serialize_article_to_json(article):
-    json_data = serializers.serialize('json', article)
-    return json_data
-
-def serialize_comment_to_json(comment):
-    json_data = serializers.serialize('json', comment)
+    class Meta:
+        pass

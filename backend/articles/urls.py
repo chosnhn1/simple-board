@@ -7,7 +7,5 @@ from . import views
 
 urlpatterns = [
     path('', views.article_list, name="list"),
-    # path('', include(router.urls)),
-    # path("", views.list, name="list"),
-    # path("<int:pk>/", views.detail, name="detail"),
+    path('<int:pk>/', views.article_detail, name="detail"),
 ]

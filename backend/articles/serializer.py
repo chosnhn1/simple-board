@@ -9,15 +9,11 @@ class ArticleListSerializer(serializers.ModelSerializer):
 
 
 class ArticleDetailSerializer(serializers.ModelSerializer):
-    # title = serializers.CharField()
-    # contents = serializers.CharField()
-    # created_at = serializers.DateTimeField()
-    # updated_at = serializers.DateTimeField()
-    # is_notice = serializers.BooleanField()
 
     class Meta:
         model = Article
         fields = ['id', 'title', 'contents', 'created_at', 'updated_at', 'is_notice', 'author']
+        read_only_fields = ['id', 'author', 'created_at', 'updated_at']
 
 
 class CommentSerializer(serializers.ModelSerializer):

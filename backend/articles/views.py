@@ -1,12 +1,9 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, get_list_or_404
-from .models import Article
-from .serializer import ArticleDetailSerializer, ArticleListSerializer
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view
+from .models import Article
+from .serializer import ArticleDetailSerializer, ArticleListSerializer
 
 # Create your views here.
 @api_view(['GET', 'POST'])

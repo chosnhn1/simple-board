@@ -35,7 +35,7 @@ const Article: React.FC = () => {
       // console.log();
     )
 
-  })
+  }, []);
 
   const [article, setArticle] = useState<ArticleData>(defaultArticle);
 

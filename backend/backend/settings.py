@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
 
+    # CORS
+    'corsheaders',
+
     # django
     'django.contrib.admin',
     'django.contrib.auth',
@@ -51,6 +54,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # corsheaders
+    'corsheaders.middleware.CorsMiddleware',
+
+    # django Middlewares
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -142,3 +149,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
 }
+
+# CORS Middleware Settings
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:5173'
+]

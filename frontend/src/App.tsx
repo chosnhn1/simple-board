@@ -1,9 +1,17 @@
 import { useState } from 'react'
+import { createBrowserRouter, RouterProvider } from 'react-router'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import Article from './components/Article'
+import ArticleList from './components/ArticleList'
+
+const router = createBrowserRouter([
+  {path: '/', element: <ArticleList />},
+  {path: '/:articleId', element: <Article />},
+]);
 
 function App() {
   const [count, setCount] = useState(0)
@@ -11,6 +19,7 @@ function App() {
   return (
     <>
       <Header></Header>
+      <RouterProvider router={router} />
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />

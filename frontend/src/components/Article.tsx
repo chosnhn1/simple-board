@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { useParams } from 'react-router'
+import instance from "../api/axiosConfig";
 
 interface ArticleData {
   title: string;
@@ -17,16 +18,18 @@ const defaultArticle: ArticleData = {
   author: '',
 }
 
-const Article: React.FC<{articleId: number}> = ({articleId}) => {
+const Article: React.FC = () => {
+  let {articleId} = useParams();
+
   useEffect(() => {
-    const fetchArticle = (id) => {
-      return axios.get(`/articles/${articleId}`)
+    const fetchArticle = () => {
+      return instance.get(`/articles/${articleId}`)
       .then(response => response.data)
       .catch(error => {
         throw error;
       })
     };
-    fetchArticle(articleId)
+    fetchArticle()
     .then(data => setArticle(data))
     .finally(
       // console.log();

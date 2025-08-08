@@ -9,7 +9,7 @@ class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='articles')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    is_notice = models.BooleanField()
+    is_notice = models.BooleanField(default=False)
     
 class Comment(models.Model):
     contents = models.TextField()

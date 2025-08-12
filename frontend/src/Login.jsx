@@ -10,6 +10,7 @@ function Login() {
     instance.post('api/token/', formData)
     .then((res) => {
       console.log(res.data);
+      
     })
     .catch((err) => {
       console.log(err);

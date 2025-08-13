@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import instance from './utils/axiosConfig'
+import { useNavigate } from 'react-router';
 
 function Login() {
+  let navigate = useNavigate();
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -10,7 +12,11 @@ function Login() {
     instance.post('api/token/', formData)
     .then((res) => {
       console.log(res.data);
-      
+      localStorage.setItem("access", res.data.access)
+      localStorage.setItem("refresh", res.data.refresh)      
+    })
+    .then(() => {
+      navigate("/");
     })
     .catch((err) => {
       console.log(err);

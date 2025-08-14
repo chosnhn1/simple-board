@@ -1,33 +1,30 @@
 import React from 'react';
-import instance from './utils/axiosConfig';
+import { Route, Routes, NavLink, Link, useNavigate } from 'react-router'
+import Login from './Login'
+import './Header.css';
 
 function Header(props) {
+  let navigate = useNavigate();
   const user = props.user;
 
-  const handleLogin = () => {
-    console.log('clicked!');
-  }
-
   const handleLogout = () => {
-    instance.post('/accounts/logout', )
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((e) => {
-      console.log(e);
-    })
-  
     console.log('clicked!');
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+    navigate("/");
   }
 
   return (
-    <header>
-      <ul>
-        <li>Simple Board</li>        
-        <li><a onClick={handleLogin}>Login</a></li>
-        <li>hello, {user.username}!</li>
-        <li><a onClick={handleLogout}>Logout</a></li>
-      </ul>
+    <header className="main-header">
+      <nav className="navbar">
+        <ul>
+          <li>Simple Board</li>        
+          <Link to="/login">Login</Link>
+          <li>hello, {user.username}!</li>
+          <li><a onClick={handleLogout}>Logout</a></li>
+          <Link to="/articles"></Link>
+        </ul>
+      </nav>
     </header>
   )
 }

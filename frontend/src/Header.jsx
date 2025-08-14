@@ -1,23 +1,22 @@
 import React from 'react';
-import instance from './utils/axiosConfig';
 import { Route, Routes, NavLink, Link, useNavigate } from 'react-router'
 import Login from './Login'
+import './Header.css';
 
 function Header(props) {
   let navigate = useNavigate();
   const user = props.user;
-  const is_authenticated = user.is_authenticated;
-  const handleLogout = () => {
 
+  const handleLogout = () => {
     console.log('clicked!');
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
-
     navigate("/");
   }
 
   return (
     <header className="main-header">
+      <nav className="navbar">
         <ul>
           <li>Simple Board</li>        
           <Link to="/login">Login</Link>
@@ -25,6 +24,7 @@ function Header(props) {
           <li><a onClick={handleLogout}>Logout</a></li>
           <Link to="/articles"></Link>
         </ul>
+      </nav>
     </header>
   )
 }

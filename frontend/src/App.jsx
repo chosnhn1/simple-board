@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-import Header from './Header'
-import Home from './Home'
+import { useEffect, useState } from 'react';
+import './App.css';
+import Header from './Header';
+import Home from './Home';
+import Body from './Body';
+import Footer from './Footer';
 import instance from './utils/axiosConfig';
 
 function App() {
@@ -39,9 +41,11 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div className="container">
       <Header user={user} />
-    </>
+      <Body />
+      <Footer />
+    </div>
   )
 }
 

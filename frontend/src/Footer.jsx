@@ -4,7 +4,7 @@ function Footer() {
   return (
     <footer style={{
       maxHeight: '10rem',
-    }}>Footer</footer>
+    }}>Simple-Board 2025</footer>
   )
 }
 

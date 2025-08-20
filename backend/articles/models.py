@@ -11,8 +11,12 @@ class Article(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_notice = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ['-created_at']
+
     def __str__(self):
         return f"{self.title} by {self.author}"
+    
     
 class Comment(models.Model):
     contents = models.TextField()

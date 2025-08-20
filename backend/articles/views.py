@@ -4,13 +4,17 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Article, Comment
 from .serializer import ArticleDetailSerializer, ArticleListSerializer, CommentSerializer
+from rest_framework.pagination import PageNumberPagination
 
 # Create your views here.
 @api_view(['GET', 'POST'])
 def article_list(request):
     if request.method == 'GET':
         articles = get_list_or_404(Article)
-        serializer = ArticleListSerializer(articles, many=True)
+        paginator = PageNumberPagination()
+        paginator.page_size = 10
+        page = paginator.paginate_queryset(articles, request)
+        serializer = ArticleListSerializer(page, many=True)
         return Response(serializer.data)
     
     elif request.method == 'POST':

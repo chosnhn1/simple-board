@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import instance from './utils/axiosConfig';
-import { useNavigate, useParams, redirect } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 function ArticleForm(props) {
+  // todo: use this form to patch article
   // const articlePk = useParams().pk;
   const navigate = useNavigate();
   const postArticle = (formData) => {

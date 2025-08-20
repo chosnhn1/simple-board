@@ -1,40 +1,43 @@
 import React, { useState } from 'react';
 import instance from './utils/axiosConfig';
+import { useNavigate, useParams, redirect } from 'react-router';
 
 function ArticleForm(props) {
-  initialArticle = {
-    title: "",
-    content: "",
-  }
-  const [article, setArticle] = useState(props.article || initialArticle);
-
-  const postArticle = (pk) => {
+  // const articlePk = useParams().pk;
+  const navigate = useNavigate();
+  const postArticle = (formData) => {
+    const article = {
+      "title": formData.get("title"), 
+      "content": formData.get("content") 
+    }
 
     instance.post(`articles/`, article, {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        'Authorization': `Bearer ${localStorage.getItem('access')}`
       }
     })
     .then((res) => {
-      console.log("done");
-      // redirect to article
+      console.log(res);
+      // todo: redirect to article
+      navigate("/");
     })
     .catch((err) => {
       console.log(err);
     })
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    postArticle();
-  };
-
   return (
-    <form action={() => ()} method="POST" className="article-form">
-      <input type="text" name="title" id="" />
-      <input type="text" name="contents" id="" />
-      <button type="submit"></button>
-      <button type="reset"></button>
+    <form method="POST" className="article-form" style={{"display": "flex", "flexDirection": "column"}} action={postArticle}
+    >
+      <label style={{"textAlign": "left"}}>제목</label>
+      <input type="text" name="title" />
+      <label style={{"textAlign": "left"}}>내용</label>
+      {/* <input type="text" name="content" id="" /> */}
+      <textarea name="content" cols="10"></textarea>
+      <div style={{"display": "flex", "flexDirection": "row"}}>
+        <button type="submit"></button>
+        <button type="reset"></button>
+      </div>
     </form>
   );
 }

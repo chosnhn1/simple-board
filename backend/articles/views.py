@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 from .models import Article, Comment
 from .serializer import ArticleDetailSerializer, ArticleListSerializer, CommentSerializer
 from rest_framework.pagination import PageNumberPagination
+from django.core.paginator import Paginator
 
 # Create your views here.
 @api_view(['GET', 'POST'])
@@ -15,7 +16,7 @@ def article_list(request):
         paginator.page_size = 10
         page = paginator.paginate_queryset(articles, request)
         serializer = ArticleListSerializer(page, many=True)
-        return Response(serializer.data)
+        return paginator.get_paginated_response(serializer.data)
     
     elif request.method == 'POST':
         if request.user.is_authenticated:

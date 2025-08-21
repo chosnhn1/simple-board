@@ -1,15 +1,22 @@
 import { useEffect, useState } from 'react';
 import ArticleList from './ArticleList';
 import instance from './utils/axiosConfig';
-import { useNavigate } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 
 function Home() {
-  const [articles, setArticles] = useState([])
+  const [page, setPage] = useState({
+    count: 0,
+    next: null,
+    previous: null,
+    results: []
+  })
   const navigate = useNavigate();
-  const getArticles = () => {
-    instance.get('articles/')
+  let [ params ] = useSearchParams();
+  const targetPage = params.get("page");
+  const fetchPage = (p = 1) => {
+    instance.get(`articles/?page=${p}`)
     .then((res) => {
-      setArticles(res.data);
+      setPage(() => (res.data));
     })
     .catch((err) => {
       console.log(err);
@@ -21,12 +28,16 @@ function Home() {
   }
 
   useEffect(() => {
-    getArticles();
+    if (targetPage) {
+      fetchPage(targetPage);
+    } else {
+      fetchPage();
+    }
   }, [])
 
   return (
     <div>
-      <ArticleList articles={articles} />
+      <ArticleList page={page} fetchPage={fetchPage} targetPage={targetPage} />
       <button onClick={handleWrite}>작성</button>
     </div>
   );

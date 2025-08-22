@@ -7,13 +7,15 @@ import Footer from './Footer';
 import instance from './utils/axiosConfig';
 
 function App() {
-  const [user, setUser] = useState({
+  const baseUser = {
     id: 0,
     username: "anonymousUser",
     is_active: false,
     email: "",
     is_authenticated: false
-  });
+  }
+
+  const [user, setUser] = useState({...baseUser});
 
   const getUser = () => {
     let token = localStorage.getItem("access")
@@ -42,8 +44,8 @@ function App() {
 
   return (
     <div className="container">
-      <Header user={user} />
-      <Body />
+      <Header user={user} setUser={setUser} baseUser={baseUser} />
+      <Body setUser={setUser} getUser={getUser} />
       <Footer />
     </div>
   )

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import instance from './utils/axiosConfig'
 import { useNavigate } from 'react-router';
 
-function Login() {
+function Login(props) {
   let navigate = useNavigate();
 
   const handleLogin = (event) => {
@@ -13,9 +13,10 @@ function Login() {
     .then((res) => {
       console.log(res.data);
       localStorage.setItem("access", res.data.access)
-      localStorage.setItem("refresh", res.data.refresh)      
+      localStorage.setItem("refresh", res.data.refresh)
     })
     .then(() => {
+      props.getUser();
       navigate("/");
     })
     .catch((err) => {

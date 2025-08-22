@@ -5,7 +5,6 @@ from rest_framework.decorators import api_view
 from .models import Article, Comment
 from .serializer import ArticleDetailSerializer, ArticleListSerializer, CommentSerializer
 from rest_framework.pagination import PageNumberPagination
-from django.core.paginator import Paginator
 
 # Create your views here.
 @api_view(['GET', 'POST'])

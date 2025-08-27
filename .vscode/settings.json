@@ -2,5 +2,6 @@
     "python.analysis.autoImportCompletions": true,
     "[javascriptreact]": {
         "editor.tabSize": 2
-    }
+    },
+    "javascript.suggest.autoImports": true
 }

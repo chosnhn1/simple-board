@@ -1,17 +1,15 @@
 import React from 'react';
 import { Route, Routes, NavLink, Link, useNavigate } from 'react-router'
-import Login from './Login'
-import './Header.css';
+// import './Header.css';
 
-function Header(props) {
+function Header({user, setUser, baseUser}) {
   let navigate = useNavigate();
-  const { user, setUser, baseUser } = props;
 
   const handleLogout = () => {
     console.log('clicked!');
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
-    setUser(() => (baseUser));
+    setUser(() => ({...baseUser}));
     navigate("/");
   }
 
@@ -19,6 +17,7 @@ function Header(props) {
     if (user.username !== 'anonymousUser') {
       return (<>
       <li>hello, {user.username}!</li>
+      <li><Link to="/articles/form/">Write</Link></li>
       <li><a onClick={handleLogout}>Logout</a></li>
       </>)
     } else {
@@ -34,7 +33,7 @@ function Header(props) {
       <nav className="navbar">
         <ul>
           <li>Simple Board</li>
-          <AuthMenu />
+          <AuthMenu user={user} />
           <Link to="/articles"></Link>
         </ul>
       </nav>

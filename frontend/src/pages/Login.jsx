@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import instance from './utils/axiosConfig'
+import instance from '../utils/axiosConfig';
 import { useNavigate } from 'react-router';
 
-function Login(props) {
+function Login({ getUser }) {
   let navigate = useNavigate();
 
   const handleLogin = (event) => {
@@ -16,7 +16,7 @@ function Login(props) {
       localStorage.setItem("refresh", res.data.refresh)
     })
     .then(() => {
-      props.getUser();
+      getUser();
       navigate("/");
     })
     .catch((err) => {
@@ -34,4 +34,4 @@ function Login(props) {
   )
 }
 
-export default Login
+export default Login;

@@ -1,5 +1,7 @@
-.navbar {
+.main-header {
     position: fixed;
+    min-height: 32px;
+    padding: 32px 32px;
 }
 
 .navbar > ul {

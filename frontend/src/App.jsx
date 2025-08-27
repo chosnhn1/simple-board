@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
-import './App.css';
-import Header from './Header';
-import Home from './Home';
-import Body from './Body';
-import Footer from './Footer';
+// import './App.css';
+import Login from './pages/Login';
+import ArticleList from './pages/ArticleList';
+import ArticleDetail from './pages/ArticleDetail';
+import ArticleForm from './pages/ArticleForm';
+import Header from './layouts/Header';
+import Footer from './layouts/Footer';
+import { Routes, Route } from 'react-router';
 import instance from './utils/axiosConfig';
 
 function App() {
@@ -13,8 +16,7 @@ function App() {
     is_active: false,
     email: "",
     is_authenticated: false
-  }
-
+  };
   const [user, setUser] = useState({...baseUser});
 
   const getUser = () => {
@@ -45,10 +47,17 @@ function App() {
   return (
     <div className="container">
       <Header user={user} setUser={setUser} baseUser={baseUser} />
-      <Body setUser={setUser} getUser={getUser} />
+      <Routes>
+        <Route path="/" element={<ArticleList />}></Route>
+        <Route path="login" element={<Login getUser={getUser} /> }></Route>
+        <Route path="articles">
+          <Route path="form/:pk?" element={<ArticleForm />}></Route>
+          <Route path=":pk" user={user} element={<ArticleDetail />}></Route>
+        </Route>
+      </Routes>
       <Footer />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

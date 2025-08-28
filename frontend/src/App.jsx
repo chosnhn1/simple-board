@@ -15,10 +15,10 @@ function App() {
     username: "anonymousUser",
     is_active: false,
     email: "",
-    is_authenticated: false
   };
-  const [user, setUser] = useState({...baseUser});
+  const [user, setUser] = useState(baseUser);
 
+  // check token and set User state with server fetch
   const getUser = () => {
     let token = localStorage.getItem("access")
     if (token) {
@@ -29,13 +29,13 @@ function App() {
       instance.get(`/accounts/${userId}`)
       .then((res) => {
         const userInfo = res.data;
-        setUser((prevUser) => ({...prevUser, ...userInfo}));
+        setUser(userInfo);
       })
       .catch((err) => {
         console.log(err);
       })
     } else {
-      console.log('user not authenticated');
+      console.log('no token founded');
       return;
     }
   };
@@ -52,7 +52,7 @@ function App() {
         <Route path="login" element={<Login getUser={getUser} /> }></Route>
         <Route path="articles">
           <Route path="form/:pk?" element={<ArticleForm />}></Route>
-          <Route path=":pk" user={user} element={<ArticleDetail />}></Route>
+          <Route path=":pk" element={<ArticleDetail user={user} />}></Route>
         </Route>
       </Routes>
       <Footer />

@@ -25,7 +25,6 @@ function Header({user, setUser, baseUser}) {
       <Link to="/login">Login</Link>
       </>)
     }
-
   }
 
   return (

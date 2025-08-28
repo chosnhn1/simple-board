@@ -3,6 +3,7 @@ import instance from '../utils/axiosConfig';
 import { useNavigate, useParams } from 'react-router';
 
 function ArticleForm() {
+
   const [article, setArticle] = useState({
     title: "",
     content: ""
@@ -63,8 +64,7 @@ function ArticleForm() {
       {/* <input type="text" name="content" id="" /> */}
       <textarea name="content" cols="10" value={article.content} onChange={e => setArticle({...article, content: e.target.value})}></textarea>
       <div style={{"display": "flex", "flexDirection": "row"}}>
-        <button type="submit"></button>
-        <button type="reset"></button>
+        <button type="submit">작성</button>
       </div>
     </form>
   );

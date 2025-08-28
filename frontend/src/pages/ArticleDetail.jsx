@@ -6,10 +6,23 @@ import { Link } from 'react-router';
 
 function ArticleDetail({ user }) {
 
+  // libraries
   let navigator = useNavigate();
-
-  const [article, setArticle] = useState({})
   const articlePk = useParams().pk;
+
+  // states
+  const [article, setArticle] = useState({
+    id: 0,
+    title: "",
+    content: "",
+    created_at: "",
+    updated_at: "",
+    author: "",
+    is_notice: false,
+    comments: []
+  });
+
+  // methods 
   const fetchArticle = (pk) => {
     instance.get(`articles/${pk}`)
     .then((res) => {
@@ -36,31 +49,33 @@ function ArticleDetail({ user }) {
     .catch((err) => {
       console.log(err);
     });
-  }
-
-  const handleEdit = () => {
-    if (user.id === article.author) {
-      navigator(`form/${articlePk}`)
-    }
-  }
+  };
 
   const handleDelete = () => {
     if (window.confirm("삭제하시겠습니까?")) {
       deleteArticle(articlePk);
     } 
-  }
+  };
 
+  // sub-Components
   const EditMenu = () => (<>
-    <Link to={`/articles/form/${articlePk}`}>수정</Link>
-    <ul onClick={handleEdit}>수정</ul>
+    <ul><Link to={`/articles/form/${articlePk}`}>수정</Link></ul>
     <ul onClick={handleDelete}>삭제</ul>
   </>)
+
+  const CommentList = ({comments}) => (<div className="comments-list">
+    {comments.map((comment) => <div key={comment.id}>
+      {comment.author} - {comment.content} ({comment.created_at})
+    </div>)}
+  </div>)
 
   // component startup:
   useEffect(() => {
     fetchArticle(articlePk);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // Component
   return (
     <div className="article-container">
       <div className="title">
@@ -76,8 +91,7 @@ function ArticleDetail({ user }) {
         <ul><Link to="/">목록</Link></ul>
         { user.id === article.author && <EditMenu />}
       </li>
-      <div></div>
-      <div></div>
+      <CommentList comments={article.comments} />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ArticleDetail from './ArticleDetail';
-import { Link, useNavigate, useParams } from 'react-router';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router';
 import instance from '../utils/axiosConfig';
 
 
@@ -18,20 +18,23 @@ const renderArticle = (article) => {
   );
 };
 
-const Paginator = ({count, next, previous}) => {
+const Paginator = ({count, next, previous, fetchPage}) => {
+  const nextPage = next ? new URL(next).searchParams.get("page") : false;
+  const previousPage = previous ? new URL(previous).searchParams.get("page") : false;
+
   return (
   <div className="paginator">
-    <ul>
-      <li>Prev</li>
-      <li>Next</li>
-    </ul>
+    <li>
+      {!!previousPage && <ul onClick={() => {fetchPage(previousPage)}}>prev</ul>}
+      {!!nextPage && <ul onClick={() => {fetchPage(nextPage)}}>next</ul>}
+    </li>
   </div>
   )
-}
+};
 
 function ArticleList() {
-  let params = useParams();
-  const pageNumber = params.page;
+  let [searchParams] = useSearchParams();
+  const pageNumber = searchParams.get("page");
   const [isLoaded, setIsLoaded] = useState(false);
   const [page, setPage] = useState({
     count: 0,
@@ -55,8 +58,13 @@ function ArticleList() {
   
   // initial render
   useEffect(() => {
-    fetchPage(pageNumber);
-  }, [])
+    if (pageNumber) {
+      fetchPage(pageNumber);
+    } else {
+      fetchPage(1);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageNumber, ])
 
   return (
     <div>
@@ -73,7 +81,7 @@ function ArticleList() {
         { isLoaded && page.results.map((article) => (renderArticle(article)))}
       </tbody>
     </table>
-    <Paginator previous={page.previous} next={page.next} count={page.count} />
+    <Paginator previous={page.previous} next={page.next} count={page.count} fetchPage={fetchPage} />
   </div>
   )
 }

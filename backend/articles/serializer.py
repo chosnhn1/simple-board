@@ -12,16 +12,16 @@ class ArticleListSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    author = UserDetailSerializer()
+    author = UserDetailSerializer(read_only=True)
 
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ['id', 'author', 'content', 'created_at']
         read_only_fields = ['id', 'author', 'article', 'created_at']
 
 class ArticleDetailSerializer(serializers.ModelSerializer):
     comments = CommentSerializer(many=True, read_only=True)
-    author = UserDetailSerializer()
+    author = UserDetailSerializer(read_only=True)
     
     class Meta:
         model = Article

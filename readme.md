@@ -31,3 +31,22 @@ Messageboard featuring:
 * comment
   * author
   * contents
+
+## Specifications
+
+* User
+  * Create: Signup
+  * Retrieve: User Profile
+    * access user's articles and comments
+  * Update: edit user info
+  * Delete: Delete account
+* Article
+  * Create: write article
+  * Retrieve: read article, both list and detailed
+  * Update: update article
+  * Delete: delete article
+  * Commenting
+    * Create and Delete article-related comments
+* Additionals
+  * add user permission: moderators
+    * can write notices, delete (or making flags) other articles

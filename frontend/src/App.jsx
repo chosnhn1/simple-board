@@ -8,6 +8,7 @@ import Header from './layouts/Header';
 import Footer from './layouts/Footer';
 import { Routes, Route } from 'react-router';
 import instance from './utils/axiosConfig';
+import Signup from './pages/Signup';
 
 function App() {
   const baseUser = {
@@ -50,6 +51,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ArticleList />}></Route>
         <Route path="login" element={<Login getUser={getUser} /> }></Route>
+        <Route path="signup" element={<Signup />}></Route>
         <Route path="articles">
           <Route path="form/:pk?" element={<ArticleForm />}></Route>
           <Route path=":pk" element={<ArticleDetail user={user} />}></Route>

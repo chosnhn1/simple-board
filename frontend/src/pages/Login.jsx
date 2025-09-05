@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import instance from '../utils/axiosConfig';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 
 function Login({ getUser }) {
   let navigate = useNavigate();
@@ -25,12 +25,17 @@ function Login({ getUser }) {
   }
 
   return (
-    <form method="post" onSubmit={handleLogin}>
-      <input type="text" name="username" />
-      <input type="password" name="password" />
-      <button type="submit">Login</button>
-      <button type="reset">Reset</button>
-    </form>
+    <div>
+      <form method="post" onSubmit={handleLogin}>
+        <input type="text" name="username" />
+        <input type="password" name="password" />
+        <button type="submit">Login</button>
+        <button type="reset">Reset</button>
+      </form>
+    <div>
+      <p>Don't have account? <Link to="/signup">Sign up here.</Link></p>
+    </div>
+    </div>
   )
 }
 

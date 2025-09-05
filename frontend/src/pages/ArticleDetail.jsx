@@ -64,7 +64,7 @@ function ArticleDetail({ user }) {
     <ul onClick={handleDelete}>삭제</ul>
   </>)
 
-  const CommentList = ({comments, articlePk, fetchArticle}) => {
+  const CommentList = ({comments, articlePk, fetchArticle, user}) => {
     const deleteComment = (pk) => {
       if (window.confirm("댓글을 삭제하시겠습니까?")) {
         instance.delete(`articles/${articlePk}/comments/${pk}/`, {
@@ -84,7 +84,7 @@ function ArticleDetail({ user }) {
     return (<div className="comments-list">
     {comments.map((comment) => <div key={comment.id}>
       <span>{comment.author.username} - {comment.content} ({comment.created_at}</span>)
-      <button onClick={() => {deleteComment(comment.id)}}>X</button>
+      {comment.author.id === user.id && <button onClick={() => {deleteComment(comment.id)}}>X</button>}
     </div>)}
   </div>)
   }
@@ -104,14 +104,14 @@ function ArticleDetail({ user }) {
       <div className="about">
         {article.author.username}
       </div>
-      <div className="content">
+      <div className="content" style={{"whiteSpace": "pre-wrap"}}>
         <p>{article.content}</p>
       </div>
       <li style={{"display": "flex", "flexDirection": "row"}}>
         <ul><Link to="/">목록</Link></ul>
         { user.id === article.author.id && <EditMenu />}
       </li>
-      <CommentList comments={article.comments} articlePk={articlePk} fetchArticle={fetchArticle} />
+      <CommentList comments={article.comments} articlePk={articlePk} fetchArticle={fetchArticle} user={user} />
       <CommentForm articlePk={articlePk} fetchArticle={fetchArticle} />
     </div>
   );
@@ -129,6 +129,8 @@ function CommentForm({ articlePk, fetchArticle }) {
     .then(() => {
       // reload article
       fetchArticle(articlePk);
+      // flush form
+      setContent("");
     })
     .catch((err) => {
       console.log(err);
@@ -136,7 +138,7 @@ function CommentForm({ articlePk, fetchArticle }) {
   };
 
   return (<div>
-    <textarea name="comment" onChange={(e) => {setContent(e.target.value)}} rows="2"></textarea>
+    <textarea name="comment" onChange={(e) => {setContent(e.target.value)}} value={content} rows="2"></textarea>
     <button onClick={handleClick}>입력</button>
   </div>)
 }

@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import instance from '../utils/axiosConfig';
-import { useNavigate, Link } from 'react-router';
+import React, { useState } from "react";
+import instance from "../utils/axiosConfig";
+import { useNavigate, Link } from "react-router";
 
 function Login({ getUser }) {
   let navigate = useNavigate();
@@ -9,20 +9,21 @@ function Login({ getUser }) {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
-    instance.post('api/token/', formData)
-    .then((res) => {
-      console.log(res.data);
-      localStorage.setItem("access", res.data.access)
-      localStorage.setItem("refresh", res.data.refresh)
-    })
-    .then(() => {
-      getUser();
-      navigate("/");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }
+    instance
+      .post("api/token/", formData)
+      .then((res) => {
+        console.log(res.data);
+        localStorage.setItem("access", res.data.access);
+        localStorage.setItem("refresh", res.data.refresh);
+      })
+      .then(() => {
+        getUser();
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div>
@@ -32,11 +33,13 @@ function Login({ getUser }) {
         <button type="submit">Login</button>
         <button type="reset">Reset</button>
       </form>
-    <div>
-      <p>Don't have account? <Link to="/signup">Sign up here.</Link></p>
+      <div>
+        <p>
+          Don't have account? <Link to="/signup">Sign up here.</Link>
+        </p>
+      </div>
     </div>
-    </div>
-  )
+  );
 }
 
 export default Login;

@@ -1,43 +1,41 @@
-import React from 'react';
-import { Route, Routes, NavLink, Link, useNavigate } from 'react-router'
+import React from "react";
+import { Route, Routes, NavLink, Link } from "react-router";
 // import './Header.css';
 
-function Header({user, setUser, baseUser}) {
-  let navigate = useNavigate();
-
-  const handleLogout = () => {
-    console.log('clicked!');
-    localStorage.removeItem("access");
-    localStorage.removeItem("refresh");
-    setUser(() => ({...baseUser}));
-    navigate("/");
-  }
-
-  const AuthMenu = () => {
-    if (user.username !== 'anonymousUser') {
-      return (<>
-      <li>hello, {user.username}!</li>
-      <li><Link to="/articles/form/">Write</Link></li>
-      <li><a onClick={handleLogout}>Logout</a></li>
-      </>)
-    } else {
-      return (<>
-      <Link to="/login">Login</Link>
-      </>)
-    }
-  }
-
+export default function Header({
+  user = {},
+  isLogin = false,
+  handleLogout = (f) => f,
+  style = {},
+}) {
   return (
-    <header className="main-header">
+    <header style={style} className="main-header">
       <nav className="navbar">
         <ul>
           <li>Simple Board</li>
-          <AuthMenu user={user} />
-          <Link to="/articles"></Link>
+          {isLogin && (
+            <>
+              <li>Hello, {user.username}!</li>
+              <Link to="/articles/form/">Write</Link>
+              <li onClick={handleLogout}>Logout</li>
+            </>
+          )}
+          {!isLogin && (
+            <>
+              <li>Hello!</li>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="signup">Sign-up</Link>
+              </li>
+            </>
+          )}
+          <li>
+            <Link to="/articles">Article List</Link>
+          </li>
         </ul>
       </nav>
     </header>
-  )
+  );
 }
-
-export default Header

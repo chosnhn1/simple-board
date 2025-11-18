@@ -1,15 +1,15 @@
 .main-header {
-    position: fixed;
-    min-height: 32px;
-    padding: 32px 32px;
+  position: fixed;
+  min-height: 32px;
+  padding: 32px 32px;
 }
 
 .navbar > ul {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .navbar > ul > * {
-    display: inline-block;
-    padding: 12px;
+  display: inline-block;
+  padding: 12px;
 }
